@@ -10,6 +10,7 @@
    git
    (ivy :variables
         ivy-extra-directories nil)
+   (keyboard-layout :variables kl-layout 'dvorak)
    (org :variables
         org-want-todo-bindings t)
    (shell :variables
@@ -20,7 +21,7 @@
                     version-control-diff-tool 'git-gutter+)
 
    ;; Misc
-   graphviz
+   ;;mbk graphviz
    ranger
    (ibuffer :variables
             ibuffer-group-buffers-by 'projects)
@@ -33,10 +34,10 @@
 
    ;; Languages
    c-c++
-   clojure
+   ;;mbk clojure
    emacs-lisp
-   haskell
-   hy  ; I wrote this mode/layer, yay
+   ;;mbk haskell
+   ;;mbk hy  ; I wrote this mode/layer, yay
    (python :variables
            python-test-runner 'pytest
            python-spacemacs-indent-guess nil)
@@ -44,12 +45,12 @@
 
 
    ;; Experimental/in-flux
-   (mu4e :variables
-         mu4e-installation-path       "/usr/local/share/emacs/site-lisp"
-         mu4e-use-maildirs-extension  t
-         ;; mu4e-enable-async-operations t
-         ;; mu4e-spacemacs-layout-name "@Mu4e"
-         ;; mu4e-spacemacs-layout-binding "m"
-         ;; mu4e-spacemacs-kill-layout-on-exit t
-         )
+   ;; (mu4e :variables
+   ;;       mu4e-installation-path       "/usr/local/share/emacs/site-lisp"
+   ;;       mu4e-use-maildirs-extension  t
+   ;;       ;; mu4e-enable-async-operations t
+   ;;       ;; mu4e-spacemacs-layout-name "@Mu4e"
+   ;;       ;; mu4e-spacemacs-layout-binding "m"
+   ;;       ;; mu4e-spacemacs-kill-layout-on-exit t
+   ;;       )
    ))

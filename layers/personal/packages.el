@@ -9,7 +9,7 @@
 
 (defun personal/init-blog ()
   (use-package blog
-    :if (executable-find "hugo")
+    :if nil ;;mbk (executable-find "hugo")
     :init
     (progn
       (setq blog-dir          "~/dev/blog")
@@ -28,10 +28,11 @@
 (defun personal/init-outline-ivy ()
   (use-package outline-ivy
     :defer t
-    :bind ("C-j" . oi-jump)))
+    :bind ("C-t" . oi-jump))) ;;mbk C-j
 
 ;;; Personal
 
 (defun personal/init-personal ()
   (use-package personal
-    :if eric?))
+    :if nil ;;mbk eric?))
+    ))

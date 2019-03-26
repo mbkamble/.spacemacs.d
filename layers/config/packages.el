@@ -20,7 +20,8 @@
         s
 
         ;; Local Packages
-        (redo-spacemacs :location local)))
+        (redo-spacemacs :location local)
+        ))
 
 ;;; Unowned Packages
 ;;;; Aggressive indent
@@ -49,14 +50,15 @@
 ;;;; Evil
 
 (defun config/post-init-evil ()
-  (setq evil-escape-key-sequence "jk")
-  (setq evil-escape-unordered-key-sequence "true")
+  (setq evil-escape-key-sequence "ht") ;; mbk jk
+  (setq evil-escape-unordered-key-sequence t) ;; mbk "true"
 
-  (evil-global-set-key 'normal "Q" 'evil-execute-q-macro)
+  (evil-global-set-key 'normal "Q" 'evil-execute-q-macro) ;;mbk shorthand for '@q' (execute macro from q register)
   (evil-define-key '(normal visual motion) 'global
     "H" 'evil-first-non-blank
-    "L" 'evil-end-of-line-interactive
-    "0" 'evil-jump-item)
+    "S" 'evil-end-of-line-interactive ;; mbk "L"
+    ;;mbk "0" 'evil-jump-item  (already available on %, so is there any need for binding evil-jump-item to 0)
+    )
 
   (advice-add 'evil-ex-search-next     :after 'evil-scroll-to-center-advice)
   (advice-add 'evil-ex-search-previous :after 'evil-scroll-to-center-advice))
@@ -70,26 +72,26 @@
 (defun config/post-init-ivy ()
   (setq ivy-height 20)
 
-  (spacemacs/set-leader-keys "ai" 'ivy-resume)
+  (spacemacs/set-leader-keys "ai" 'ivy-resume) ;;mbk Currently on SPC r l
 
   (bind-keys :map ivy-minibuffer-map
-             ("C-l"        . ivy-avy)
-             ("C-u"        . ivy-scroll-down-command)
+             ("C-l"        . ivy-avy) ;;mbk C-l originally bound to ivy-next-line-or-history
+             ("C-u"        . ivy-scroll-down-command) ;;mbk scroll minibuffer forward/backword. Orig bound to C-v, M-v
              ("C-d"        . ivy-scroll-up-command)
-             ("C-n"        . ivy-restrict-to-matches)
-             ("C-y"        . ivy-yank-word)
-             ("C-<return>" . ivy-call)
-             ("C-SPC"      . ivy-dispatching-done)
-             ("C-S-SPC"    . ivy-dispatching-call)))
+             ;;mbk ("C-n"        . ivy-restrict-to-matches) default bound to S-SPC. Restricts matches to current input and clears input
+             ("C-y"        . ivy-yank-word) ;;mbk pulls ARG words from buffer into search string. ARG could be + or -
+             ("C-<return>" . ivy-call) ;;mbk originally on M-RET
+             ("C-SPC"      . ivy-dispatching-done) ;;mbk originally unbound
+             ("C-S-SPC"    . ivy-dispatching-call))) ;;mbk originally on C-M-o
 
 ;;;; Magit
 
-(defun config/post-init-magit ()
-  (bind-keys :map magit-mode-map
-             ("M-1" . winum-select-window-1)
-             ("M-2" . winum-select-window-2)
-             ("M-3" . winum-select-window-3)
-             ("M-4" . winum-select-window-4)))
+;;mbk (defun config/post-init-magit ()
+;;mbk   (bind-keys :map magit-mode-map
+;;mbk              ("M-1" . winum-select-window-1) originally bound to SPC-1 etc.
+;;mbk              ("M-2" . winum-select-window-2)
+;;mbk              ("M-3" . winum-select-window-3)
+;;mbk              ("M-4" . winum-select-window-4)))
 
 ;;;; Org
 
@@ -133,9 +135,9 @@
 (defun config/post-init-org ()
   (evil-define-key '(normal visual motion) org-mode-map
     "gh" 'outline-up-heading
-    "gj" 'outline-forward-same-level
-    "gk" 'outline-backward-same-level
-    "gl" 'outline-next-visible-heading
+    "gt" 'outline-forward-same-level ;;mbk gj
+    "gn" 'outline-backward-same-level ;;mbk gk
+    "gs" 'outline-next-visible-heading ;;mbk gl
     "gu" 'outline-previous-visible-heading)
 
   (spacemacs/set-leader-keys "aof" 'org-open-at-point-global)
@@ -150,7 +152,7 @@
 (defun config/pre-init-ranger ()
   (setq ranger-deer-show-details nil)
 
-  (evil-global-set-key 'normal "_" 'ranger)
+  (evil-global-set-key 'normal "_" 'ranger) ;;mbk originally bound to evil-next-line-1-first-non-blank(move cursor COUNT-1 lines down on first non-blank char)
 
   ;; To get around `ranger/post-init-dired' overwriting keybindings
   (spacemacs|use-package-add-hook ranger
@@ -158,13 +160,14 @@
     (bind-keys :map ranger-mode-map
                ("n"   . dired-create-directory)
                ("E"   . wdired-change-to-wdired-mode)
-               ("C-j" . ranger-travel)
+               ("C-t" . ranger-travel) ;;mbk C-j
                ("C-e" . ranger-pop-eshell)
-               ("M-1" . winum-select-window-1)
-               ("M-2" . winum-select-window-2)
-               ("M-3" . winum-select-window-3)
-               ("M-4" . winum-select-window-4)
-               ("M-5" . winum-select-window-5))))
+               ;;mbk ("M-1" . winum-select-window-1)
+               ;;mbk ("M-2" . winum-select-window-2)
+               ;;mbk ("M-3" . winum-select-window-3)
+               ;;mbk ("M-4" . winum-select-window-4)
+               ;;mbk ("M-5" . winum-select-window-5)
+               )))
 
 ;;; Owned Packages
 ;;;; Auto Dim Other Buffers
@@ -209,18 +212,18 @@
     (progn
       (evil-define-key '(normal visual motion) outline-minor-mode-map
         "gh" 'outline-up-heading
-        "gj" 'outline-forward-same-level
-        "gk" 'outline-backward-same-level
-        "gl" 'outline-next-visible-heading
+        "gt" 'outline-forward-same-level ;;mbk gj
+        "gn" 'outline-backward-same-level ;;mbk gk
+        "gs" 'outline-next-visible-heading ;;mbk gl
         "gu" 'outline-previous-visible-heading)
 
       (spacemacs/set-leader-keys
         "nn" 'outshine-narrow-to-subtree
         "nw" 'widen
-        "nj" 'outline-move-subtree-down
-        "nk" 'outline-move-subtree-up
-        "nh" 'outline-promote
-        "nl" 'outline-demote)
+        "nt" 'outline-move-subtree-down ;;mbk nj
+        "nn" 'outline-move-subtree-up ;;mbk nk
+        "n<" 'outline-promote ;;mbk nh
+        "n>" 'outline-demote) ;;mbk nl
 
       (advice-add 'outshine-narrow-to-subtree :before 'outshine-fix-narrow-pos)
 
@@ -290,20 +293,20 @@
 
       (setq redo-spacemacs-undo-bindings-alist
             '(;; Top-level
-              ("!" shell-command)
-              ("'" spacemacs/default-pop-shell)
-              ("0" neotree-show)
-              ("?" counsel-descbinds)
-              ("`" winum-select-window-by-number)
-              ("1" winum-select-window-1)
-              ("2" winum-select-window-2)
-              ("3" winum-select-window-3)
-              ("4" winum-select-window-4)
-              ("5" winum-select-window-5)
-              ("6" winum-select-window-6)
-              ("7" winum-select-window-7)
-              ("8" winum-select-window-8)
-              ("9" winum-select-window-9)
+              ;;mbk ("!" shell-command)
+              ;;mbk ("'" spacemacs/default-pop-shell)
+              ;;mbk ("0" neotree-show)
+              ;;mbk ("?" counsel-descbinds)
+              ;;mbk ("`" winum-select-window-by-number)
+              ;;mbk ("1" winum-select-window-1)  # lets keep these. I like it better than M-1
+              ;;mbk ("2" winum-select-window-2)
+              ;;mbk ("3" winum-select-window-3)
+              ;;mbk ("4" winum-select-window-4)
+              ;;mbk ("5" winum-select-window-5)
+              ;;mbk ("6" winum-select-window-6)
+              ;;mbk ("7" winum-select-window-7)
+              ;;mbk ("8" winum-select-window-8)
+              ;;mbk ("9" winum-select-window-9)
 
               ;; A - applications
               ("ad" deer)
@@ -474,16 +477,17 @@
               ("C-M-/" split-window-right-and-focus)
               ("M--"   split-window-below)
               ("C-M--" split-window-below-and-focus)
-              ("M-1" winum-select-window-1)
-              ("M-2" winum-select-window-2)
-              ("M-3" winum-select-window-3)
-              ("M-4" winum-select-window-4)
-              ("M-5" winum-select-window-5)
+              ;;mbk ("M-1" winum-select-window-1)
+              ;;mbk ("M-2" winum-select-window-2)
+              ;;mbk ("M-3" winum-select-window-3)
+              ;;mbk ("M-4" winum-select-window-4)
+              ;;mbk ("M-5" winum-select-window-5)
 
               ;; Editing, Searching, Movement
               ("C-,"   lisp-state-toggle-lisp-state)
               ("C-SPC" er/expand-region)
               ("C-S-s" spacemacs/swiper-region-or-symbol)
+              ("C-t" oi-jump) ;;mbk originally bound to pop-tag-mark tried to set in layers/personal/packages.el but get overridden
 
               ;; Files, Buffers
               ("M-f" counsel-find-file)

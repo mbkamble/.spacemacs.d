@@ -26,10 +26,10 @@
 
 ;;;; Configuration
 
-(defvar server? (if eric? t nil)
+(defvar server? t ;(if eric? t nil)
   "Alias `dotspacemacs-enable-server'. Defaults to nil for non-eric users.")
 
-(defvar redo-bindings? (if eric? t nil)
+(defvar redo-bindings? t ;(if eric? t nil)
   "Redo spacemacs bindings? Defaults to, and I recommend, nil to non-eric users.
 
 See the commentary in the config layer's local pkg `redo-spacemacs'.")
@@ -69,6 +69,7 @@ Check `dotspacemacs/get-variable-string-list' for all vars you can configure."
    dotspacemacs-scratch-mode               'org-mode
    dotspacemacs-startup-lists              nil
    dotspacemacs-whitespace-cleanup         'trailing
+   dotspacemacs-distinguish-gui-tab        t
 
    ;; The following are unchanged but are still required for reloading via
    ;; 'SPC f e R' `dotspacemacs/sync-configuration-layers' to not throw warnings

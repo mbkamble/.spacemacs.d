@@ -15,7 +15,7 @@
         which-key
 
         ;; Personal display-related packages
-        (pretty-code     :location local)
+        ;;mbk (pretty-code     :location local)
         (pretty-eshell   :location local)
         (pretty-fonts    :location local)
         (pretty-magit    :location local)
@@ -129,15 +129,15 @@
 ;;; Pretty Packages
 ;;;; Pretty-code
 
-(defun display/init-pretty-code ()
-  (use-package pretty-code
-    :config
-    (progn
-      (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")))
-      (pretty-code-add-hook 'hy-mode-hook         '((:def "defn")
-                                                    (:lambda "fn")))
-      (pretty-code-add-hook 'python-mode-hook     '((:def "def")
-                                                    (:lambda "lambda"))))))
+;;mbk (defun display/init-pretty-code ()
+;;mbk   (use-package pretty-code
+;;mbk     :config
+;;mbk     (progn
+;;mbk       (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")))
+;;mbk       (pretty-code-add-hook 'hy-mode-hook         '((:def "defn")
+;;mbk                                                     (:lambda "fn")))
+;;mbk       (pretty-code-add-hook 'python-mode-hook     '((:def "def")
+;;mbk                                                    (:lambda "lambda"))))))
 
 ;;;; Pretty-eshell
 
