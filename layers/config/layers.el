@@ -15,6 +15,7 @@
         org-want-todo-bindings t)
    (shell :variables
           shell-default-shell 'eshell)
+   shell-scripts
    syntax-checking
    (version-control :variables
                     version-control-global-margin t

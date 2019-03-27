@@ -7,7 +7,7 @@
         eshell
         evil
         ivy
-        magit
+        ;;mbk magit
         ob org org-bullets
         ranger
 
@@ -18,6 +18,7 @@
         hierarchy
         outshine  ; also configures `outline-mode'
         s
+        fill-column-indicator
 
         ;; Local Packages
         (redo-spacemacs :location local)
@@ -50,7 +51,7 @@
 ;;;; Evil
 
 (defun config/post-init-evil ()
-  (setq evil-escape-key-sequence "ht") ;; mbk jk
+  (setq evil-escape-key-sequence "qn") ;; mbk jk
   (setq evil-escape-unordered-key-sequence t) ;; mbk "true"
 
   (evil-global-set-key 'normal "Q" 'evil-execute-q-macro) ;;mbk shorthand for '@q' (execute macro from q register)
@@ -133,6 +134,9 @@
   (setq org-indent-indentation-per-level 1))
 
 (defun config/post-init-org ()
+  (evil-define-key 'normal org-mode-map
+    "T" 'evil-join
+    "t" 'evil-next-line)
   (evil-define-key '(normal visual motion) org-mode-map
     "gh" 'outline-up-heading
     "gt" 'outline-forward-same-level ;;mbk gj
@@ -175,7 +179,8 @@
 (defun config/init-auto-dim-other-buffers ()
   (use-package auto-dim-other-buffers
     :config
-    (auto-dim-other-buffers-mode)))
+    (auto-dim-other-buffers-mode)
+    ))
 
 ;;;; Dash functional
 
@@ -248,6 +253,26 @@
 (defun config/init-s ()
   (use-package s))
 
+;;;; Fill-Column-Indicator
+
+(defun config/init-fill-column-indicator ()
+  (use-package fill-column-indicator
+    :defer t
+    :init
+    (progn
+      (message "running init-fill-column-indicator")
+      (setq fci-rule-width 1)
+      ;; manually register the minor mode since it does not define any
+      ;; lighter
+      (add-to-list 'minor-mode-alist '(fci-mode ""))
+      (spacemacs|add-toggle fill-column-indicator
+        :status fci-mode
+        :on (turn-on-fci-mode)
+        :off (turn-off-fci-mode)
+        :documentation "Display the fill column indicator."
+        :evil-leader "tf"))
+    :config
+    (spacemacs|diminish fci-mode " ⓕ" " f")))
 ;;; Local Packages
 ;;;; Redo-spacemacs
 
@@ -271,7 +296,7 @@
               "j"    ; jump/join/split
               "N"    ; navigation
               "r"    ; registers/rings/resume
-              "t"    ; toggles
+              ;;mbk "t"    ; toggles
               "z"    ; zoom
 
               ;; Sub prefixes

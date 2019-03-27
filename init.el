@@ -92,20 +92,23 @@ Check `dotspacemacs/get-variable-string-list' for all vars you can configure."
    dotspacemacs-excluded-packages
    '(;; Must Exclude (for styling, functionality, bug-fixing reasons)
      fringe importmagic scss-mode vi-tilde-fringe
-
-     ;; Packages I don't use (non-exhaustive)
-     anzu centered-cursor-mode column-enforce-mode company-statistics
-     doom-modeline eshell-prompt-extras evil-anzu evil-mc evil-tutor
-     fancy-battery fill-column-indicator gnuplot golden-ratio indent-guide
-     live-py-mode multi-term multiple-cursors mwim neotree paradox py-isort
-     yapfify)))
+            ;; Packages I don't use (non-exhaustive)
+            anzu centered-cursor-mode column-enforce-mode company-statistics
+            doom-modeline eshell-prompt-extras evil-anzu evil-mc evil-tutor
+            fancy-battery fill-column-indicatorzzz gnuplot golden-ratio indent-guide
+            live-py-mode multi-term multiple-cursors mwim neotree paradox py-isort
+            yapfify)))
 
 ;;;; Spacemacs/user-init
 
 (defun dotspacemacs/user-init ()
   "Package independent settings to run before `dotspacemacs/user-config'."
   (fringe-mode 0)
-  (setq custom-file "~/.spacemacs.d/.custom-settings.el"))
+  (setq custom-file "~/.spacemacs.d/.custom-settings.el")
+  (setq epa-armor t)
+  (setq epa-file-name-regexp "\\.\\(gpg\\|asc\\)$")
+  (epa-file-name-regexp-update)
+  )
 
 ;;;; Spacemacs/user-config
 ;;;;; Post Layer Load
@@ -128,4 +131,14 @@ Check `dotspacemacs/get-variable-string-list' for all vars you can configure."
   (dotspacemacs/user-config/post-layer-load-config)
 
   ;; Drop-in whatever config here, experiment!
-  )
+  (with-eval-after-load 'org
+    (add-hook 'org-mode-hook (lambda ()
+                               (evil-define-key 'normal evil-org-mode-map
+                                 "t" 'evil-next-line
+                                 "T" 'evil-join)
+                               (turn-on-auto-fill)
+                               ;;mbk (fci-mode) ;;mbk fill column indicator
+                               (set-fill-column 82)
+                               (setq org-html-htmlize-output-type 'css)
+                               ))
+    ))
