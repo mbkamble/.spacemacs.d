@@ -59,7 +59,7 @@
     ;;mbk "H" 'evil-first-non-blank. already available on '^'
     "S" 'evil-end-of-line-interactive ;;mbk "L"
     ;;mbk "0" 'evil-jump-item  (already available on %)
-    )
+   )
 
   (advice-add 'evil-ex-search-next     :after 'evil-scroll-to-center-advice)
   (advice-add 'evil-ex-search-previous :after 'evil-scroll-to-center-advice))
